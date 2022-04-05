@@ -9,17 +9,15 @@ public class StartMenuManager : MonoBehaviour
     public string playerName;
     public GameObject inputField;
     public Button button;
-
-    [System.Serializable]
-    class SaveData
-    {
-        public string name;
-        public string score;
-    }
+    public Text Record;
+    public Text RecordHolder;
 
     private void Start()
     {
         button.onClick.AddListener(LoadGameStart);
+
+        Record.text = "Record: " + DataManager.instance.BestScore.ToString();
+        RecordHolder.text = "Set By: " + DataManager.instance.BestScoreHolder;
     }
 
     void LoadGameStart()
@@ -30,5 +28,14 @@ public class StartMenuManager : MonoBehaviour
             DataManager.instance.currentPlayerName = playerName;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+    }
+
+public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.ExitPlaymode();
+#else
+Application.Quit();
+#endif
     }
 }
