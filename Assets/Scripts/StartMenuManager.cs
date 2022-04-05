@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartMenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public string playerName;
+    public GameObject inputField;
+    public Button button;
+
+    [System.Serializable]
+    class SaveData
     {
-        
+        public string name;
+        public string score;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        button.onClick.AddListener(LoadGameStart);
+    }
+
+    void LoadGameStart()
+    {
+        playerName = inputField.GetComponent<Text>().text;
+        if (playerName != "")
+        {
+            DataManager.instance.currentPlayerName = playerName;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
